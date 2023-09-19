@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Engineering Agile Assignment | Add Record</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="interface-area">
+        <h2>Add Record</h2>
+        <form class="interface-form" method="POST">
+            <input type="text" name="owner-name" placeholder="Enter Owner Name:">
+            <input type="text" name="property-location" placeholder="Enter Property Location:">
+            <input type="text" name="property-value" placeholder="Enter Property Value:">
+            <button type="submit" class="confirm-add-button">Create Record</button>
+            <button type="submit" class="return-home-btn" formaction="{{ url_for('home') }}">Return to Home</button>
+        </form>
+
+    </div>
+</body>
+</html>
