@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Software Engineering Agile Assignment</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="interface-area">
-        <h2>Outcome</h2>
-        <form class="interface-form" method="POST">
-            <div class="outcome-message">{{message}}</div>
-            <button type="submit" class="return-home-btn" formaction="{{ url_for('home') }}">Go to Home</button>
-        </form>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{outcome}}</h2>
+<form class="interface-form">
+    <div class="outcome-message">{{message}}</div>
+    <button type="submit" class="return-home-btn" style="text-transform: capitalize;"
+        formaction="{{ url_for(destination) }}">Go To {{destination}}</button>
+</form>
+
+{% endblock %}

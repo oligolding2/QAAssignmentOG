@@ -1,5 +1,4 @@
-import sqlite3
-import random
+import sqlite3,random,re
 
 def executor(query,args,query_type):
     try:
@@ -19,33 +18,49 @@ def executor(query,args,query_type):
             case 'delete':
                 curs.execute(query,(args,))
                 statement = 'Record successfully deleted'
+            
+            case 'login':
+                return curs.execute(query,args).fetchone()
 
         conn.commit()
         conn.close()
         return statement
     except sqlite3.Error as e:
-        return "SQLite error: "  + e  
+        return "Error encountered"
     
 def append(owner,location,value,user):
-    for x in owner,location,value,user:
-        if isinstance(x,str):
-            pass
+    items = {'owner':owner,'location':location,'value':value,'user':user}
+    for k,v in items.items():
+        if v is None or len(v) == 0:
+            raise SystemError(f"You must provide a value for {k.capitalize()}")
+        elif k!='value' and bool(re.match(r'^\d+$', v)):
+            raise SystemError(f"The value for {k} must be a string")
         else:
-            TypeError(x)
+            pass
     values = (owner,location,value,user)
     insert_query = "INSERT INTO mortgage (owner,location,value,inserted_by) VALUES (?,?,?,?)"
     outcome = executor(insert_query,values,'add')
-    return outcome
+    if "error" in outcome.lower():
+        raise SystemError("Failed adding record to database")
+    else:
+        return outcome
 
 def read(mortgage,searchall):
-    query = None
-    args = None
     if searchall:
         query = "SELECT mortgage_id,owner,location,value FROM mortgage"
+        args = None
     else:
         query = "SELECT mortgage_id,owner,location,value FROM mortgage WHERE mortgage_id = ?"
-        args = str(mortgage)
-    return executor(query,args,'read')
+        if mortgage is None or len(mortgage) == 0:
+            raise SystemError("You must specify a mortgage ID to search.")
+        else:
+            args = str(mortgage)
+    
+    result = executor(query,args,'read')
+    if result is not None and len(result) != 0:
+        return result
+    else:
+        raise SystemError(f"There was no record for mortgage ID {mortgage}.")
     
 
 def update(mortgage,name,location,value):
@@ -53,13 +68,14 @@ def update(mortgage,name,location,value):
     query = "UPDATE mortgage SET "
     updates = []
     args = []
-    for key,value in values.items():
-        if len(value) != 0:
-            updates.append(f"{key} = ?")
-            args.append(value)
+    for k,v in values.items():
+        if len(v) > 0 and k!='value' and bool(re.match(r'^\d+$', v)):
+            raise SystemError(f"The value for {k} must be a string")
+        elif len(v) != 0:
+            updates.append(f"{k} = ?")
+            args.append(v)
         else:
             pass
-    
     query += ", ".join(updates) + " WHERE mortgage_id = ?"
     args.append(mortgage)
     outcome = executor(query,args,'update')
@@ -77,10 +93,14 @@ def create_user(username,password,admin_token):
         if str(admin_token) == "HiQA99999999":
             args = (random.randint(0,9999999),username,password,1)
         else:
-            SystemError("Invalid admin token provided.")
+            raise SystemError("Invalid admin token provided.")
     else:
         args = (random.randint(0,9999999),username,password,0)
     
     executor(query,args,'add')
 
-
+def login(username,password):
+    query = "SELECT * FROM users where username = ? AND password = ?"
+    args = username,password
+    result = executor(query,args,'login')
+    return result

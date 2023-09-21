@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Engineering Agile Assignment | Functions</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="interface-area">
+        <h2>Welcome {{username}}</h2>
+        <h3>Please select a function from below:</h3>
+        <form class="interface-form">
+            <button class="display-mortgage-btn" type="submit" formaction="{{ url_for('display_record') }}">
+                Display Record
+            </button>
+            <button class="add-mortgage-btn" type="submit" formaction="{{ url_for('add_record') }}">
+                Add Record
+            </button>
+            <button class="update-mortgage-btn" type="submit" formaction="{{ url_for('update_record') }}">
+                Update Record
+            </button>
+        </form>
+    </div>
+</body>
+</html>

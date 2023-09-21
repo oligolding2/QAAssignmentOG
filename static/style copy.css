@@ -52,7 +52,7 @@ body {
     background-color: white;
 }
 
-.interface-form > input, .interface-form > button, .modal-box > button, .interface-form > a {
+.interface-form > input, .interface-form > button, .modal-box > button, .logoff-button {
     border-radius: 10px;
     font-size: 16px;
     padding: 10px;
@@ -64,13 +64,16 @@ body {
     cursor: pointer;
     border: 0.5px solid black;
     outline: none;
-    text-decoration: none;
-    color: black;
 }
 
 .interface-form > input[type='checkbox']{
     text-align: left;
     justify-content: left;
+}
+
+.interface-form > a {
+    color: blue;
+    cursor: pointer;
 }
 
 .search-results > table,tbody,thead{
@@ -99,6 +102,7 @@ body {
 
 .return-home-btn:hover {
     background-color: purple;
+    cursor: pointer;
     color: white
 }
 
@@ -107,4 +111,16 @@ body {
     font-weight: bold;
     color: white;
     border: 2px solid black;
+}
+
+.logoff-button {
+    border: 1px solid black;
+    background-color: white;
+    position: static;
+    top: 10px;
+    right: 20px;
+    width: 80%;
+    color: black;
+    text-decoration: none;
+    text-align: center;
 }

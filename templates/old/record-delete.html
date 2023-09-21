@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="interface-area">
+        <h2>Delete Record</h2>
+        <form class="interface-form" method="POST">
+            <h3>Enter Mortgage ID of Record to Delete:</h3>
+            <input type="number" name="mortgage-id" placeholder="Enter Mortgage ID:">
+            <button class="search-record" type="button">Search Record</button>
+            <button type="submit" class="return-home-btn" formaction="{{ url_for('home') }}">Return to Home</button>
+                <dialog class="modal-box" id="modal-box">
+                    <form class="interface-form" method="POST">
+                        <h3>Please confirm you'd like to delete this record</h3>
+                        <button type="submit" id="modal-delete-button" class="confirm-deletion-btn">Confirm Deletion</button>
+                        <button type="button" id="modal-cancel-btn" class="modal-cancel-btn">Cancel</button>
+                    </form>
+                </dialog>
+        </form>
+    </div>
+    <script>
+        const modal = document.querySelector('.modal-box');
+        const openModal = document.querySelector('.search-record');
+        const closeModal = document.querySelector('.modal-cancel-btn');
+
+        openModal.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.close();
+        });
+    </script>
+</body>
+</html>

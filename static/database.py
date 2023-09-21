@@ -35,4 +35,7 @@ def users(conn,curs):
     curs.execute('''INSERT INTO users VALUES(?,'lsmith','bot_676767',0);''',(4562562,))
     conn.commit()
     
-users(conn,curs)
+
+curs.execute("DELETE FROM mortgage WHERE mortgage_id = ?",('19',))
+conn.commit()
+curs.close()

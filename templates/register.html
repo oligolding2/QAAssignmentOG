@@ -1,57 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Software Engineering Agile Assignment | Register</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="interface-area">
-        <h2>Register</h2>
-        <h3>Welcome user! Register below:</h3>
-        <form class="interface-form" method="POST">
-            <input type="text" name="register-username" placeholder="Enter your username:">
-            <input type="password" name="register-password" id="register-password" placeholder="Enter your password:">
+{% extends "base.html" %}
 
-            <input type="text" name="admin-token" id="admin-token" placeholder="Enter admin token:" style="display: none;">
+{% block content %}
 
-            <div class="checkboxes">
-                <label for="register-show-password"><input type="checkbox" id="register-show-password" placeholder="Show password" onclick="toggleShowPassword()"> Show password</label>
-                <label for="register-as-admin"><input type="checkbox" name="admin-register" id="admin-register" placeholder="Register as Admin" onchange="toggleAdminToken()">Register as Admin</label>
-            </div>
-            <button type="submit" class="register-confirm">Register</button>
-            <button type="submit" class="return-home-btn" formaction="{{ url_for('login') }}">Back to Login</button>
-        </form>
+<h2>Register</h2>
+<h3>Welcome user! Register below:</h3>
+<form class="interface-form" method="POST">
+    <input type="text" name="register-username" placeholder="Enter your username:">
+    <input type="password" name="register-password" id="register-password" placeholder="Enter your password:">
 
+    <input type="text" name="admin-token" id="admin-token" placeholder="Enter admin token:" style="display: none;">
+
+    <div class="checkboxes">
+        <label for="register-show-password"><input type="checkbox" id="register-show-password"
+                placeholder="Show password" onclick="toggleShowPassword()"> Show password</label>
+        <label for="register-as-admin"><input type="checkbox" name="admin-register" id="admin-register"
+                placeholder="Register as Admin" onchange="toggleAdminToken()">Register as Admin</label>
     </div>
-    <script>
-        function toggleAdminToken() {
-           const boolChecked = document.getElementById('admin-register').checked,
-           adminToken = document.getElementById('admin-token');
+    <button type="submit" class="register-confirm">Register</button>
+    <a href="{{ url_for('login') }}" class="return-home-btn">Back to Login</button>
+</form>
 
-           if (boolChecked) {
-                adminToken.style.display = 'block';
-           }
-           else {
-                adminToken.style.display = 'none';
-           }
+</div>
+<script>
+    function toggleAdminToken() {
+        const boolChecked = document.getElementById('admin-register').checked,
+            adminToken = document.getElementById('admin-token');
+
+        if (boolChecked) {
+            adminToken.style.display = 'block';
         }
+        else {
+            adminToken.style.display = 'none';
+        }
+    }
 
-        
 
-        function toggleShowPassword() {
-            const checkPassword = document.getElementById('register-show-password'),
+
+    function toggleShowPassword() {
+        const checkPassword = document.getElementById('register-show-password'),
             passwordBox = document.querySelector('#register-password');
 
-            if (passwordBox.type == "password"){
-                passwordBox.type = "text";
-            }
-            else {
-                passwordBox.type = "password";
-            }
+        if (passwordBox.type == "password") {
+            passwordBox.type = "text";
         }
+        else {
+            passwordBox.type = "password";
+        }
+    }
 
-    </script>
-</body>
-</html>
+</script>
+
+{% endblock %}
